@@ -87,7 +87,7 @@ func main() {
 			case Dollar:
 				output = append(output, '\\', '"')
 				state = Text
-			default:
+			case Statement:
 				panic("Invalid new line")
 			}
 		default:
