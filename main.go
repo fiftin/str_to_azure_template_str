@@ -27,8 +27,7 @@ func main() {
 	}
 
 	reader := bufio.NewReader(os.Stdin)
-	var output []rune
-	output = append(output, '\'')
+	output := []rune("concat('")
 	state := Text
 	for {
 		input, _, err := reader.ReadRune()
@@ -101,6 +100,6 @@ func main() {
 			}
 		}
 	}
-	output = append(output, '\'')
+	output = append(output, '\'', ')')
 	fmt.Print(string(output))
 }
