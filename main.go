@@ -28,6 +28,7 @@ func main() {
 
 	reader := bufio.NewReader(os.Stdin)
 	var output []rune
+	output = append(output, '\'')
 	state := Text
 	for {
 		input, _, err := reader.ReadRune()
@@ -91,7 +92,15 @@ func main() {
 				panic("Invalid new line")
 			}
 		default:
+			switch state {
+			case Dollar:
+				output = append(output, input)
+				state = Text
+			default:
+				output = append(output, input)
+			}
 		}
 	}
-
+	output = append(output, '\'')
+	fmt.Print(string(output))
 }
