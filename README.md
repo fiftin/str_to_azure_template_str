@@ -1,0 +1,1 @@
+# str_to_azure_template_str
