@@ -90,6 +90,7 @@ func main() {
 			case Statement:
 				panic("Invalid new line")
 			}
+		case '\r':
 		default:
 			switch state {
 			case Dollar:
