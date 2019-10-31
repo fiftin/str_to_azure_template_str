@@ -20,13 +20,24 @@ func main() {
 		panic(err)
 	}
 
-	if info.Mode()&os.ModeCharDevice != 0 || info.Size() <= 0 {
-		fmt.Println("The command is intended to work with pipes.")
-		fmt.Println("Usage: str_to_azure_template_str < str")
-		return
+	var reader *bufio.Reader
+
+	if len(os.Args[1:]) > 0 {
+		f, err := os.Open(os.Args[1])
+		if err != nil {
+			fmt.Println("First argument must be filename")
+			return
+		}
+		reader = bufio.NewReader(f)
+	} else {
+		if info.Mode()&os.ModeCharDevice != 0 || info.Size() <= 0 {
+			fmt.Println("The command is intended to work with pipes.")
+			fmt.Println("Usage: str_to_azure_template_str < str")
+			return
+		}
+		reader = bufio.NewReader(os.Stdin)
 	}
 
-	reader := bufio.NewReader(os.Stdin)
 	output := []rune("concat('")
 	state := Text
 	for {
